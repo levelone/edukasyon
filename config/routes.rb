@@ -1,3 +1,14 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'static_pages#index'
+
+  namespace :admin do
+    root to: '/admin#index'
+
+    resources :students
+    resources :teachers
+    resources :klasses do
+      put :enroll, on: :member
+      put :unenroll, on: :member
+    end
+  end
 end

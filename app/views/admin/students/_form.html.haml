@@ -1,0 +1,29 @@
+= form_with(model: student, url: admin_students_path, local: true) do |f|
+  - if student.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(student.errors.count, "error")} prohibited this student from being saved:"
+      %ul
+        - student.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :email
+    = f.text_field :email
+
+  .field
+    = f.label :first_name, 'First Name'
+    = f.text_field :first_name
+
+  .field
+    = f.label :last_name, 'Last Name'
+    = f.text_field :last_name
+
+  .field
+    = f.label :password
+    = f.password_field :password
+
+  .field
+    = f.label :password_confirmation, 'Password Confirmation'
+    = f.password_field :password_confirmation
+
+  = f.submit

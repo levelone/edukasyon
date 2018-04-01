@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @teacher.email %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @teacher.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @teacher.last_name %>
+</p>
+
+<p>
+  <strong>Enrolled Klasses:</strong>
+  <ul>
+    <% @teacher.klasses.offered_klasses.each do |klass| %>
+      <li>
+        <%= klass.subject %>
+        <%= link_to 'Stop Teaching',
+          unenroll_admin_klass_path(klass.id),
+          data: {
+            method: :put,
+            confirm: 'Are you sure?'
+          } %>
+      </li>
+    <% end %>
+  </ul>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_teacher_path(@teacher) %> |
+<%= link_to 'Back', admin_teachers_path %>

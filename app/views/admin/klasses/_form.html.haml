@@ -1,0 +1,17 @@
+= form_with(model: klass, url: admin_klasses_path, local: true) do |f|
+  - if klass.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(klass.errors.count, "error")} prohibited this klass from being saved:"
+      %ul
+        - klass.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :subject
+    = f.text_field :subject
+
+  .field
+    = f.label :teacher
+    = f.collection_select :teacher_id, @teachers, :id, :full_name, include_blank: true
+
+  = f.submit
