@@ -1,0 +1,21 @@
+%h1 Login
+
+= form_for(:session, url: login_path) do |f|
+  - if @error.present?
+    .error_explanation
+      .alert.alert-error
+        = @error
+
+  .form_field
+    = f.label :email
+    = f.text_field :email, value: session[:email]
+
+  .form_field
+    = f.label :password
+    = f.password_field :password
+
+  = f.submit 'Login'
+
+%p
+  No account?
+  = link_to 'Sign up', new_student_path

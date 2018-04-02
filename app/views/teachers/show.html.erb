@@ -12,10 +12,10 @@
   <strong>Courses:</strong>
   <ul>
     <% @teacher.klasses.offered_klasses.each do |klass| %>
-      <li><%= klass.course.name %></li>
+      <li><%= link_to klass.course.name, klass_path(klass) %></li>
     <% end %>
   </ul>
 </p>
 
 
-<%= link_to 'Back', :back %>
+<%= link_to 'Back', teachers_path %>

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root 'static_pages#index'
 
+  get '/login',   to: 'sessions#new'
+  post '/login',  to: 'sessions#create'
+  get '/logout',  to: 'sessions#destroy'
+
   namespace :admin do
     root to: '/admin#index'
 
@@ -13,7 +17,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :courses,   only: [:index, :show]
-  resources :klasses,   only: [:show]
-  resources :teachers,  only: [:index, :show]
+  resources :students
+  resources :teachers, only: [:index, :show]
+  resources :courses, only: [:index, :show]
+  resources :klasses, only: [:show] do
+    put :enroll,    on: :member
+    put :unenroll,  on: :member
+  end
 end
