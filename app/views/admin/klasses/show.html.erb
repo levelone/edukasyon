@@ -16,7 +16,13 @@
     <% @klass.enrolled_students.each do |student| %>
       <li>
         <%= student.full_name %>
-        <a href='#'>un-enroll</a>
+        <%= link_to 'Unenroll',
+          unenroll_admin_klass_path(
+            student.klasses.find_by(
+              course_id: @klass.course,
+              teacher_id: @klass.teacher
+            )
+          ), method: :put %>
       </li>
     <% end %>
   </ul>

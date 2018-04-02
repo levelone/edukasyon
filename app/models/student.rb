@@ -2,8 +2,9 @@ class Student < ApplicationRecord
   include ActiveModel::AttributeAssignment
   attr_accessor :full_name
 
-  has_many :klasses
+  has_many :klasses, dependent: :destroy
   has_many :teachers, through: :klasses
+  has_many :courses, through: :klasses
   has_secure_password
 
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
@@ -18,11 +19,11 @@ class Student < ApplicationRecord
   # this method to klass.rb instead
   def klasses_for_enrollment
     klass_ids = []
-    student_klasses = klasses.pluck(:subject, :teacher_id)
+    student_klasses = klasses.pluck(:course_id, :teacher_id)
     student_klasses.each do |sk|
       klass_ids <<
         Klass.offered_klasses.find_by(
-          subject: sk.first,
+          course_id: sk.first,
           teacher_id: sk.last
         ).id
     end

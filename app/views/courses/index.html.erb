@@ -1,0 +1,13 @@
+<h1>Courses</h1>
+
+<%= render 'search_form', path: courses_path %>
+
+<ul>
+  <% @courses.each do |course| %>
+    <li><%= link_to course.name, course_path(course.id) %></li>
+  <% end %>
+</ul>
+
+<br>
+
+<%= link_to 'Back', root_path %>

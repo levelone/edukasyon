@@ -16,11 +16,11 @@
 </p>
 
 <p>
-  <strong>Enrolled Klasses:</strong>
+  <strong>My Klasses:</strong>
   <ul>
     <% @teacher.klasses.offered_klasses.each do |klass| %>
       <li>
-        <%= klass.subject %>
+        <%= klass.course.name %>
         <%= link_to 'Stop Teaching',
           unenroll_admin_klass_path(klass.id),
           data: {

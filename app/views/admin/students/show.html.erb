@@ -18,9 +18,9 @@
 <p>
   <strong>Enrolled Klasses:</strong>
   <ul>
-    <% @student.klasses.order(:subject).each do |klass| %>
+    <% @student.klasses.order_by_course.each do |klass| %>
       <li>
-        <%= klass.subject %> by <%= klass.teacher.full_name %>
+        <%= klass.course.name %> by <%= klass.teacher.full_name %>
         <%= link_to 'Unenroll',
           unenroll_admin_klass_path(klass.id),
           method: :put %>
@@ -34,9 +34,9 @@
   <ul>
     <% @student.klasses_for_enrollment.includes(:teacher).each do |klass| %>
       <li>
-        <%= klass.subject %> by <%= klass.teacher.full_name %>
+        <%= klass.course.name %> by <%= klass.teacher.full_name %>
         <%= link_to 'Enroll',
-          enroll_admin_klass_path(klass.id, student_id: @student.id),
+          enroll_admin_klass_path(klass.id, student_id: @student.id, course_id: klass.course_id),
           method: :put %>
       </li>
     <% end %>

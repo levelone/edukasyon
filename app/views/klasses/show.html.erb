@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @klass.subject %>
+</p>
+
+<p>
+  <strong>Teacher:</strong>
+  <%= @klass.teacher.full_name %>
+</p>
+
+<p>
+  <strong>Students:</strong>
+  <ul>
+    <% @klass.enrolled_students.each do |student| %>
+      <li><%= student.full_name %></li>
+    <% end %>
+  </ul>
+</p>
+
+<%= link_to 'Enroll', '#' %> |
+<%= link_to 'Review', '#' %> |
+<%= link_to 'Back', klasses_path %>
