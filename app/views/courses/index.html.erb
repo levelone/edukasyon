@@ -1,6 +1,8 @@
 <h1>Courses</h1>
 
-<%= render 'search_form', path: courses_path %>
+<%= render '/shared/search_form',
+  path: courses_path,
+  type: 'Course' %>
 
 <ul>
   <% @courses.each do |course| %>

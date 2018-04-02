@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Teacher</th>
+      <th>Course</th>
       <th>Students</th>
       <th>Rating</th>
       <th colspan="3"></th>
@@ -15,11 +16,11 @@
   <tbody>
     <% @course.klasses.offered_klasses.each do |klass| %>
       <tr>
-        <td><%= klass.teacher.full_name %></td>
+        <td><%= link_to klass.teacher.full_name, teacher_path(klass.teacher) %></td>
+        <td><%= link_to @course.name, klass_path(klass) %>
         <td><%= klass.enrolled_students.count %></td>
         <td>0</td>
         <td><%= link_to 'Enroll', '#' %></li>
-        <td><%= link_to 'Review', '#' %></li>
       </tr>
     <% end %>
   </tbody>

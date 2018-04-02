@@ -1,0 +1,21 @@
+<p>
+  <strong>Teacher:</strong>
+  <%= @teacher.full_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @teacher.email %>
+</p>
+
+<p>
+  <strong>Courses:</strong>
+  <ul>
+    <% @teacher.klasses.offered_klasses.each do |klass| %>
+      <li><%= klass.course.name %></li>
+    <% end %>
+  </ul>
+</p>
+
+
+<%= link_to 'Back', :back %>

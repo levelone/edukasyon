@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Subject:</strong>
-  <%= @klass.subject %>
+  <strong>Course:</strong>
+  <%= @klass.course.name %>
 </p>
 
 <p>
-  <strong>Teacher:</strong>
+  <strong>By:</strong>
   <%= @klass.teacher.full_name %>
 </p>
 
@@ -14,11 +14,11 @@
   <strong>Students:</strong>
   <ul>
     <% @klass.enrolled_students.each do |student| %>
-      <li><%= student.full_name %></li>
+      <li><%= "#{student.full_name} (#{student.email})" %></li>
     <% end %>
   </ul>
 </p>
 
 <%= link_to 'Enroll', '#' %> |
 <%= link_to 'Review', '#' %> |
-<%= link_to 'Back', klasses_path %>
+<%= link_to 'Back', :back %>

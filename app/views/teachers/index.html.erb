@@ -1,0 +1,32 @@
+<h1>Teachers</h1>
+
+<%= render '/shared/search_form',
+  path: teachers_path,
+  type: 'Teacher' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Klasses</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @teachers.includes(:klasses).each do |teacher| %>
+      <tr>
+        <td><%= link_to teacher.full_name, teacher_path(teacher) %></td>
+        <td>
+          <% teacher.klasses.offered_klasses.each do |klass| %>
+            <%= link_to klass.course.name, klass_path(klass) %>,
+          <% end %>
+        <td>0</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Back', root_path %>

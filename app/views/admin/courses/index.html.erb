@@ -2,7 +2,9 @@
 
 <h1>Courses</h1>
 
-<%= render '/courses/search_form', path: admin_courses_path %>
+<%= render '/shared/search_form',
+  path: admin_courses_path,
+  type: 'Course' %>
 
 <table>
   <thead>

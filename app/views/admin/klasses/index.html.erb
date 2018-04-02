@@ -2,7 +2,9 @@
 
 <h1>Klasses</h1>
 
-<%= render '/klasses/search_form', path: admin_klasses_path %>
+<%= render '/shared/search_form',
+  path: admin_klasses_path,
+  type: 'Klass' %>
 
 <table>
   <thead>

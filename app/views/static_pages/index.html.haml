@@ -1,6 +1,10 @@
 %h1 Welcome to Edukasyon
 
 = link_to 'Courses', courses_path
+= link_to 'Teachers', teachers_path
 = link_to 'Admin', admin_root_path
+= link_to 'Login', '#'
 
-= render '/courses/search_form', path: courses_path
+= render '/shared/search_form',
+  path: courses_path,
+  type: 'Course'
