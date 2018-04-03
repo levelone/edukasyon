@@ -13,7 +13,7 @@
 <p>
   <strong>Students:</strong>
   <ul>
-    <% @klass.enrolled_students.each do |student| %>
+    <% @klass_students.each do |student| %>
       <li>
         <%= student.full_name %>
         <%= link_to 'Unenroll',

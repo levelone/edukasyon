@@ -12,7 +12,7 @@
   <strong>Courses:</strong>
   <ul>
     <% @teacher.klasses.offered_klasses.each do |klass| %>
-      <li><%= link_to klass.course.name, klass_path(klass) %></li>
+      <li><%= link_to klass.course.name, klass_path(klass, redirect_to: URI.encode(teacher_path(@teacher))) %></li>
     <% end %>
   </ul>
 </p>

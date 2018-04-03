@@ -1,47 +1,75 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Name:</strong>
+  <%= @student.full_name.titleize %>
+</p>
+
+<p>
   <strong>Email:</strong>
   <%= @student.email %>
 </p>
 
 <p>
-  <strong>First name:</strong>
-  <%= @student.first_name %>
+  <strong>Reviews:</strong>
+
+  <% if @student.reviews.blank? %>
+    –
+  <% else %>
+    <ul>
+      <% @student.reviews.each do |r| %>
+        <li>
+          (Rating: <%= r.rating %>) –
+          "<%= r.description %>"
+          <br/><i><%= r.klasses.first.course.name %> by <%= r.klasses.first.teacher.full_name %></i>
+        </li>
+
+        <br/>
+      <% end %>
+    </ul>
+  <% end %>
 </p>
 
 <p>
-  <strong>Last name:</strong>
-  <%= @student.last_name %>
-</p>
-
-<p>
-  <strong>Enrolled Klasses:</strong>
+  <strong>Enrolled Courses:</strong>
   <ul>
     <% @student.klasses.order_by_course.each do |klass| %>
       <li>
-        <%= klass.course.name %> by <%= klass.teacher.full_name %>
-        <%= link_to 'Unenroll',
-          unenroll_admin_klass_path(klass.id),
-          method: :put %>
+        <%= klass.course.name %> by <%= klass.teacher.full_name %> |
+        <%= link_to 'View', klass_path(klass, redirect_to: URI.encode(student_path(@student))) %>
+        <% if current_user == @student %>
+          |
+          <%= link_to 'Unenroll',
+            unenroll_admin_klass_path(klass.id),
+            method: :put %>
+        <% end %>
       </li>
     <% end %>
   </ul>
 </p>
 
 <p>
-  <strong>Available Klasses:</strong>
+  <strong>Available Courses:</strong>
   <ul>
     <% @student.klasses_for_enrollment.includes(:teacher).each do |klass| %>
       <li>
-        <%= klass.course.name %> by <%= klass.teacher.full_name %>
-        <%= link_to 'Enroll',
-          enroll_admin_klass_path(klass.id, student_id: @student.id, course_id: klass.course_id),
-          method: :put %>
+        <%= klass.course.name %> by <%= klass.teacher.full_name %> |
+        <%= link_to 'View', klass_path(klass, redirect_to: URI.encode(student_path(@student))) %>
+        <% if current_user == @student %>
+          |
+          <%= link_to 'Enroll',
+            enroll_admin_klass_path(klass.id,
+              student_id: @student.id,
+              course_id: klass.course_id
+            ), method: :put %>
+        <% end %>
       </li>
     <% end %>
   </ul>
 </p>
 
-<%= link_to 'Edit', edit_student_path(@student) %> |
+<% if current_user == @student %>
+  <%= link_to 'Edit', edit_student_path(@student) %> |
+<% end %>
+
 <%= link_to 'Back', root_path %>

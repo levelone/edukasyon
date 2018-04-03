@@ -13,7 +13,12 @@ class SessionsController < ApplicationController
       session[:email] = nil
       session[:student_id] = student.id
       current_user
-      redirect_to root_path
+
+      if params[:redirect_to].present?
+        redirect_to URI.decode(params[:redirect_to])
+      else
+        redirect_to root_path
+      end
     else
       session[:email] = params[:session][:email]
       @error = build_error_message(student)

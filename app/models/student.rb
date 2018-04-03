@@ -5,6 +5,7 @@ class Student < ApplicationRecord
   has_many :klasses, dependent: :destroy
   has_many :teachers, through: :klasses
   has_many :courses, through: :klasses
+  has_many :reviews, through: :klasses
   has_secure_password
 
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i

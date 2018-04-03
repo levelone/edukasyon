@@ -11,14 +11,67 @@
 </p>
 
 <p>
-  <strong>Students:</strong>
-  <ul>
-    <% @klass.enrolled_students.each do |student| %>
-      <li><%= "#{student.full_name} (#{student.email})" %></li>
-    <% end %>
-  </ul>
+  <strong>Rating:</strong>
+
+  <% if @klass.klass_rating.nan? %>
+    – (Reviews: <%= @klass.klass_reviews.count %>)
+  <% else %>
+    <%= @klass.klass_rating %> (Reviews: <%= @klass.klass_reviews.count %>)
+  <% end %>
 </p>
 
-<%= link_to 'Enroll', '#' %> |
-<%= link_to 'Review', '#' %> |
-<%= link_to 'Back', :back %>
+<p>
+  <strong>Students:</strong>
+
+  <% if @klass_students.blank? %>
+    –
+  <% else %>
+    <ul>
+      <% @klass_students.each do |ks| %>
+        <li>
+          <%= ks.full_name %> (<%= ks.email %>)
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</p>
+
+<p>
+  <strong>Reviews:</strong>
+
+  <% if @klass_reviews.blank? %>
+    –
+  <% else %>
+    <ul>
+      <% @klass_reviews.each do |kr| %>
+        <li>
+          (Rating: <%= kr.rating %>)
+          "<%= kr.description%>" –
+          <%= kr.students.first.full_name %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</p>
+
+<% if current_user %>
+  <% if @is_klass_student %>
+    <%= link_to 'Unenroll', unenroll_klass_path(@klass), method: :put %> |
+  <% else %>
+    <%= link_to 'Enroll', enroll_klass_path(@klass), method: :put %> |
+  <% end %>
+
+  <% if @is_klass_student && !@has_klass_review %>
+    <%= link_to 'Review', new_review_path(klass_id: params[:id]) %> |
+  <% end %>
+
+<% else %>
+  <%= link_to 'Enroll', login_path(redirect_to: URI.encode(klass_path(@klass))) %> |
+  <%= link_to 'Review', login_path(redirect_to: URI.encode(klass_path(@klass))) %> |
+<% end %>
+
+<% if params[:redirect_to] %>
+  <%= link_to 'Back', URI.decode(params[:redirect_to]) %>
+<% else %>
+  <%= link_to 'Back', course_path(@klass.course) %>
+<% end %>

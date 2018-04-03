@@ -6,6 +6,8 @@
       .alert.alert-error
         = @error
 
+  = hidden_field_tag :redirect_to, params[:redirect_to]
+
   .form_field
     = f.label :email
     = f.text_field :email, value: session[:email]

@@ -5,7 +5,7 @@ class Admin::KlassesController < ApplicationController
 
   def show
     @klass = Klass.find(params[:id])
-    @enrolled_students = @klass.enrolled_students
+    @klass_students = Student.find(@klass.klass_students.map(&:student_id))
   end
 
   def new

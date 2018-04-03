@@ -6,12 +6,12 @@
   <% @course.klasses.offered_klasses.each do |klass| %>
     <li>
       By: <%= link_to klass.teacher.full_name, klass_path(klass) %> |
-      Average Rating: 0
+      Rating: <%= klass.klass_rating %>
       <% if current_user.present? %>
         |
-        <% if klass.enrolled_students.include?(current_user) %>
+        <% if klass.klass_students.find_by(student_id: current_user.id) %>
           <%= link_to 'Unenroll', unenroll_klass_path(klass), method: :put %>
-        <% else %>
+        <% else %
           <%= link_to 'Enroll', enroll_klass_path(klass), method: :put %>
         <% end %>
       <% end %>

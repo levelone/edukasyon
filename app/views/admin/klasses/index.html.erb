@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Klasses</h1>
+<h1>Manage Klasses</h1>
 
 <%= render '/shared/search_form',
   path: admin_klasses_path,
@@ -21,7 +21,7 @@
       <tr>
         <td><%= klass.course.name if klass.course %></td>
         <td><%= klass.teacher.full_name %></td>
-        <td><%= klass.enrolled_students.count %></td>
+        <td><%= klass.klass_students.count %></td>
         <td><%= link_to 'Show', admin_klass_path(klass) %></td>
         <td><%= link_to 'Edit', edit_admin_klass_path(klass) %></td>
         <td><%= link_to 'Destroy', admin_klass_path(klass), method: :delete, data: { confirm: 'Are you sure?' } %></td>

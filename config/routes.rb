@@ -18,10 +18,11 @@ Rails.application.routes.draw do
   end
 
   resources :students
-  resources :teachers, only: [:index, :show]
-  resources :courses, only: [:index, :show]
-  resources :klasses, only: [:show] do
+  resources :teachers,  only: [:index, :show]
+  resources :courses,   only: [:index, :show]
+  resources :klasses,   only: [:show] do
     put :enroll,    on: :member
     put :unenroll,  on: :member
   end
+  resources :reviews
 end
