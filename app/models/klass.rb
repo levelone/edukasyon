@@ -7,7 +7,7 @@ class Klass < ApplicationRecord
   validates_uniqueness_of :teacher_id,  scope: [:course_id, :student_id]
   after_destroy :unenroll_students, if: :klass_without_teacher?
 
-  scope :order_by_course, -> { includes(:course).order('courses.name ASC') }
+  scope :order_by_course, -> (direction = 'asc') { includes(:course).order("courses.name #{direction}") }
   scope :offered_klasses, -> { where(student_id: nil).order_by_course }
 
   scope :search, -> (term = nil) do

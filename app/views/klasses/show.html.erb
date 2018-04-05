@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+<% flash.each do |key, message| %> 
+  <p id="<%= key %>">
+    <%= message %>
+  </p>
+<% end %>
 
 <p>
   <strong>Course:</strong>
@@ -16,7 +20,13 @@
   <% if @klass.klass_rating.nan? %>
     – (Reviews: <%= @klass.klass_reviews.count %>)
   <% else %>
-    <%= @klass.klass_rating %> (Reviews: <%= @klass.klass_reviews.count %>)
+    <div class='klass-rating'>
+      <div class='stars-outer'>
+        <div class='stars-inner'>
+        </div>
+      </div>
+      (Rating: <%= @klass.klass_rating %> | Reviews: <%= @klass.klass_reviews.count %>)
+    </div>
   <% end %>
 </p>
 
@@ -47,12 +57,19 @@
         <li>
           (Rating: <%= kr.rating %>)
           "<%= kr.description%>" –
-          <%= kr.students.first.full_name %>
+          <%= kr.student.full_name %>
         </li>
       <% end %>
     </ul>
   <% end %>
 </p>
+
+<% if @is_klass_student && !@has_klass_review %>
+  <div class='klass-review'>
+    <h3>Leave Review</h3>
+    <%= render '/reviews/form', review: @review, path: reviews_path(klass_id: @klass.id) %>
+  </div>
+<% end %>
 
 <% if current_user %>
   <% if @is_klass_student %>
@@ -61,13 +78,8 @@
     <%= link_to 'Enroll', enroll_klass_path(@klass), method: :put %> |
   <% end %>
 
-  <% if @is_klass_student && !@has_klass_review %>
-    <%= link_to 'Review', new_review_path(klass_id: params[:id]) %> |
-  <% end %>
-
 <% else %>
   <%= link_to 'Enroll', login_path(redirect_to: URI.encode(klass_path(@klass))) %> |
-  <%= link_to 'Review', login_path(redirect_to: URI.encode(klass_path(@klass))) %> |
 <% end %>
 
 <% if params[:redirect_to] %>

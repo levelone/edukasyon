@@ -3,22 +3,20 @@
   <head>
     <title>Edukasyon</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <body>
-    <% if current_user.present? %>
-      <%= link_to 'My Profile', student_path(current_user) %>
-    <% end %>
-
     <%= link_to 'Home', root_path %>
     <%= link_to 'Courses', courses_path %>
     <%= link_to 'Teachers', teachers_path %>
     <%= link_to 'Admin', admin_root_path %>
 
     <% if current_user.present? %>
+      <%= link_to 'My Courses', student_path(current_user) %>
       <%= link_to 'Logout', logout_path %>
     <% else %>
       <%= link_to 'Login', login_path %>

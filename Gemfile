@@ -37,6 +37,12 @@ gem 'haml'
 # Pretty print your Ruby objects with style
 gem 'awesome_print'
 
+# A gem to automate using jQuery with Rails
+gem 'jquery-rails'
+
+# Bootstrap 4 Ruby Gem for Rails / Sprockets and Compass
+gem 'bootstrap', '~> 4.0.0'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

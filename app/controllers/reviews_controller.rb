@@ -16,7 +16,8 @@ class ReviewsController < ApplicationController
       klass_student.save!
       redirect_to klass_path(klass)
     else
-      render :new
+      flash[:error] = 'You are not enrolled in this class!'
+      redirect_to klass_path(klass)
     end
   end
 

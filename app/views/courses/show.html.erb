@@ -5,13 +5,13 @@
 <ul>
   <% @course.klasses.offered_klasses.each do |klass| %>
     <li>
-      By: <%= link_to klass.teacher.full_name, klass_path(klass) %> |
-      Rating: <%= klass.klass_rating %>
+      By <%= link_to klass.teacher.full_name, klass_path(klass) %> |
+      Overall Rating: <%= klass.klass_rating.nan? ? '–' : klass.klass_rating %>
       <% if current_user.present? %>
         |
-        <% if klass.klass_students.find_by(student_id: current_user.id) %>
+        <% if current_user.klasses.find_by(teacher_id: klass.teacher_id, course_id: klass.course_id) %>
           <%= link_to 'Unenroll', unenroll_klass_path(klass), method: :put %>
-        <% else %
+        <% else %>
           <%= link_to 'Enroll', enroll_klass_path(klass), method: :put %>
         <% end %>
       <% end %>
