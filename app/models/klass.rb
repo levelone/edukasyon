@@ -32,7 +32,8 @@ class Klass < ApplicationRecord
 
   def klass_rating
     ratings = klass_reviews.map { |kr| kr.review.rating }
-    ratings.inject(0.0) { |sum, el| sum + el } / ratings.size
+    result = ratings.inject(0.0) { |sum, el| sum + el } / ratings.size
+    result.round(2)
   end
 
   private

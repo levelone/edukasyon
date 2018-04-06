@@ -30,6 +30,7 @@ class Teacher < ApplicationRecord
 
   def klass_average_rating
     ratings = reviews.map(&:rating)
-    ratings.inject(0.0) { |sum, el| sum + el } / ratings.size
+    result = ratings.inject(0.0) { |sum, el| sum + el } / ratings.size
+    result.round(2)
   end
 end

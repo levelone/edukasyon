@@ -20,5 +20,4 @@ class Course < ApplicationRecord
     orange.jpg teal.jpg yellow.jpg
     white.jpg red.jpg navy.jpg grey.jpg
   ).freeze
-
 end

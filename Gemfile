@@ -43,6 +43,9 @@ gem 'jquery-rails'
 # Bootstrap 4 Ruby Gem for Rails / Sprockets and Compass
 gem 'bootstrap', '~> 4.0.0'
 
+# A library for generating fake data such as names, addresses, and phone numbers.
+gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

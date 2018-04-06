@@ -10,7 +10,7 @@
         <img class='card-img-top' src="<%= image_url(course.image_url || '') %>" alt='Card image'>
         <div class='card-body'>
           <h5 class='card-title'><%= truncate(course.name, length: 33) %></h5>
-          <p class='card-text'><%= truncate(course.description, length: 90) %></p>
+          <p class='card-text'><%= truncate(course.description, length: 85) %></p>
           <%= link_to 'See Course', course_path(course), class: 'btn btn-warning btn-sm text-light' %>
         </div>
       </div>
