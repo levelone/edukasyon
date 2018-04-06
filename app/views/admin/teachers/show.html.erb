@@ -1,4 +1,11 @@
-<p id="notice"><%= notice %></p>
+<p id='notice'><%= notice %></p>
+
+<p>
+  <strong>Image Url:</strong>
+  <div class='admin-show-img'>
+    <img src="<%= image_url(@teacher.image_url) %>" height='200'/>
+  </div>
+</p>
 
 <p>
   <strong>Email:</strong>

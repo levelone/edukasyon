@@ -11,7 +11,7 @@ class Klass < ApplicationRecord
   scope :offered_klasses, -> { where(student_id: nil).order_by_course }
 
   scope :search, -> (term = nil) do
-    if term
+    if term.present?
       includes(:course).where('LOWER(courses.name) LIKE ?', "%#{term.downcase}%")
     else
       order_by_course

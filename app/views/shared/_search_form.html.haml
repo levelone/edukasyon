@@ -1,3 +1,8 @@
-= form_tag(path, method: :get) do
-  = text_field_tag :q, params[:q], placeholder: "Search #{type}.."
-  = submit_tag 'Search', name: nil
+- if current_uri == root_path
+  - form_class = 'justify-content-center'
+
+= form_tag(path, method: :get, class: "form-inline search-form #{form_class}") do
+  .form-group
+    = text_field_tag :q, params[:q], type: 'text', class: 'form-control', placeholder: "Search #{type}.."
+  .form-group
+    = submit_tag 'Search', name: nil, class: 'btn btn-info'

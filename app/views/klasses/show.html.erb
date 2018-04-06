@@ -4,86 +4,83 @@
   </p>
 <% end %>
 
-<p>
-  <strong>Course:</strong>
-  <%= @klass.course.name %>
-</p>
-
-<p>
-  <strong>By:</strong>
-  <%= @klass.teacher.full_name %>
-</p>
-
-<p>
-  <strong>Rating:</strong>
-
-  <% if @klass.klass_rating.nan? %>
-    – (Reviews: <%= @klass.klass_reviews.count %>)
-  <% else %>
-    <div class='klass-rating'>
-      <div class='stars-outer'>
-        <div class='stars-inner'>
-        </div>
+<h1><%= @klass.course.name %></h1>
+<h6 class='inline-flex xs-margin-right'>
+  <kbd><%= @klass.teacher.full_name %></kbd>
+</h6>
+<% if @klass.klass_rating.nan? %>
+  – (Reviews: <%= @klass.klass_reviews.count %>)
+<% else %>
+  <div class='klass-rating inline-flex xs-margin-right'>
+    <div class='stars-outer'>
+      <div class='stars-inner'>
       </div>
-      (Rating: <%= @klass.klass_rating %> | Reviews: <%= @klass.klass_reviews.count %>)
     </div>
-  <% end %>
-</p>
-
-<p>
-  <strong>Students:</strong>
-
-  <% if @klass_students.blank? %>
-    –
-  <% else %>
-    <ul>
-      <% @klass_students.each do |ks| %>
-        <li>
-          <%= ks.full_name %> (<%= ks.email %>)
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
-</p>
-
-<p>
-  <strong>Reviews:</strong>
-
-  <% if @klass_reviews.blank? %>
-    –
-  <% else %>
-    <ul>
-      <% @klass_reviews.each do |kr| %>
-        <li>
-          (Rating: <%= kr.rating %>)
-          "<%= kr.description%>" –
-          <%= kr.student.full_name %>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
-</p>
-
-<% if @is_klass_student && !@has_klass_review %>
-  <div class='klass-review'>
-    <h3>Leave Review</h3>
-    <%= render '/reviews/form', review: @review, path: reviews_path(klass_id: @klass.id) %>
   </div>
+  <span class='stars-description small'>
+    (Rating: <%= @klass.klass_rating %> | Reviews: <%= @klass.klass_reviews.count %>)
+  </span>
 <% end %>
 
-<% if current_user %>
-  <% if @is_klass_student %>
-    <%= link_to 'Unenroll', unenroll_klass_path(@klass), method: :put %> |
-  <% else %>
-    <%= link_to 'Enroll', enroll_klass_path(@klass), method: :put %> |
-  <% end %>
+<div class='row'>
+  <div class='md-margin-top col-md-6'>
+    <h5>Students</h5>
+    <% if @klass_students.present? %>
+      <ul class='list-group'>
+        <% @klass_students.each do |ks| %>
+          <li class='list-group-item'>
+            <%= ks.first_name.titleize %> (<%= ks.email%>)
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
 
+  <div class='md-margin-top col-md-6'>
+    <h5>Reviews</h5>
+    <% if @klass_reviews.present? %>
+      <ul class='list-group'>
+        <% @klass_reviews.each do |kr| %>
+          <li class='list-group-item'>
+            <span>(Rating: <%= kr.rating %>)</span>
+            <%= kr.description %> – <%= kr.student.full_name %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
+
+<% if current_user.present? && @is_klass_student %>
+  <% action_path = unenroll_klass_path(@klass) %>
+  <% action_name = 'Unenroll' %>
+  <% action_method = :put %>
+<% elsif current_user.present? %>
+  <% action_path = enroll_klass_path(@klass) %>
+  <% action_name = 'Enroll' %>
+  <% action_method = :put %>
 <% else %>
-  <%= link_to 'Enroll', login_path(redirect_to: URI.encode(klass_path(@klass))) %> |
+  <% action_path = login_path(redirect_to: URI.encode(klass_path(@klass))) %>
+  <% action_name = 'Enroll' %>
+  <% action_method = :get %>
 <% end %>
 
 <% if params[:redirect_to] %>
-  <%= link_to 'Back', URI.decode(params[:redirect_to]) %>
+  <% back_path = URI.decode(params[:redirect_to]) %>
 <% else %>
-  <%= link_to 'Back', course_path(@klass.course) %>
+  <% back_path = course_path(@klass.course) %>
+<% end %>
+
+<div class='md-margin-top'>
+  <%= link_to action_name, action_path, method: action_method, class: 'btn btn-primary text-light' %>
+  <%= link_to 'Back', back_path, class: 'btn btn-dark text-light back-btn' %>
+</div>
+
+<% if @is_klass_student && !@has_klass_review %>
+  <div class='row md-margin-top'>
+    <div class='col-md-6'>
+      <h5 class='md-margin-bottom'>Leave Review</h5>
+      <%= render '/reviews/form', review: @review, path: reviews_path(klass_id: @klass.id) %>
+    </div>
+  </div>
 <% end %>

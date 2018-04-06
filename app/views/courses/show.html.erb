@@ -1,22 +1,28 @@
-<p id="notice"><%= notice %></p>
-
 <h1><%= @course.name %></h1>
+<p><%= @course.description %></p>
 
-<ul>
+<ul class='list-group'>
   <% @course.klasses.offered_klasses.each do |klass| %>
-    <li>
-      By <%= link_to klass.teacher.full_name, klass_path(klass) %> |
-      Overall Rating: <%= klass.klass_rating.nan? ? '–' : klass.klass_rating %>
+    <li class='list-group-item'>
       <% if current_user.present? %>
-        |
         <% if current_user.klasses.find_by(teacher_id: klass.teacher_id, course_id: klass.course_id) %>
-          <%= link_to 'Unenroll', unenroll_klass_path(klass), method: :put %>
+          <%= link_to 'Unenroll',
+            unenroll_klass_path(klass),
+            method: :put,
+            class: 'bg-transparent text-danger' %>
         <% else %>
-          <%= link_to 'Enroll', enroll_klass_path(klass), method: :put %>
+          <%= link_to 'Enroll',
+            enroll_klass_path(klass),
+            method: :put,
+            class: 'text-success' %>
         <% end %>
       <% end %>
+
+      at <%= link_to klass.teacher.full_name,
+        klass_path(klass), class: 'bg-transparent text-secondary' %>'s Class
+      (Rating: <%= klass.klass_rating.nan? ? '–' : klass.klass_rating %>)
     </li>
   <% end %>
 </ul>
 
-<%= link_to 'Back', courses_path %>
+<%= link_to 'Back', courses_path, class: 'btn btn-dark text-light back-btn md-margin-top' %>

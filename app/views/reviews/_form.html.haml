@@ -8,12 +8,11 @@
 
   = hidden_field_tag :klass_id, params[:klass_id]
 
-  .field
-    = f.label :description
-    = f.text_area :description
+  .form-group.no-margin.small
+    = f.label :rating, 'Rating: '
+    = f.select :rating, Review::RATING_SYSTEM.reverse, class: 'form-control'
 
-  .field
-    = f.label :rating
-    = f.select :rating, Review::RATING_SYSTEM.reverse
+  .form-group
+    = f.text_area :description, class: 'form-control', rows: '4'
 
-  = f.submit
+  = f.submit 'Submit', class: 'btn btn-success float-right'

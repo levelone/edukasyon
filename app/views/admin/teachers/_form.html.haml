@@ -18,6 +18,10 @@
     = f.label :last_name, 'Last Name'
     = f.text_field :last_name
 
+  .form-group
+    = f.label :image_url, 'Choose Image'
+    = f.select :image_url, Teacher::LOCAL_IMAGE_URLS
+
   .field
     = f.label :password
     = f.password_field :password

@@ -49,6 +49,7 @@ class Admin::TeachersController < ApplicationController
       :email,
       :first_name,
       :last_name,
+      :image_url,
       :password,
       :password_confirmation
     )

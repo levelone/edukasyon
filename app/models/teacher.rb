@@ -13,14 +13,23 @@ class Teacher < ApplicationRecord
   validates :password, presence: true, :length => { in: 6..20 }
 
   scope :search, -> (term = nil) do
-    if term
+    if term.present?
       where('LOWER(teachers.first_name) LIKE ? OR LOWER(teachers.last_name) LIKE ?',"%#{term.downcase}%", "%#{term.downcase}%")
     else
-      order([:first_name, :last_name])
+      order(:id)
     end
   end
 
+  LOCAL_IMAGE_URLS = %w(
+    male.png female.png
+  ).freeze
+
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def klass_average_rating
+    ratings = reviews.map(&:rating)
+    ratings.inject(0.0) { |sum, el| sum + el } / ratings.size
   end
 end

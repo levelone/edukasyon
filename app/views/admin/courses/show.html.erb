@@ -1,16 +1,30 @@
-<p id="notice"><%= notice %></p>
+<p id='notice'><%= notice %></p>
 
 <p>
   <strong>Name:</strong>
   <%= @course.name %>
 </p>
 
-<strong>Teachers:</strong>
-<ul>
-  <% @course.klasses.offered_klasses.each do |klass| %>
-    <li><%= klass.teacher.full_name %></li>
-  <% end %>
-</ul>
+<p>
+  <strong>Description:</strong>
+  <%= @course.description %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <div class='admin-show-img'>
+    <img src="<%= image_url(@course.image_url) %>" height='200'/>
+  </div>
+</p>
+
+<p>
+  <strong>Teachers:</strong>
+  <ul>
+    <% @course.klasses.offered_klasses.each do |klass| %>
+      <li><%= klass.teacher.full_name %></li>
+    <% end %>
+  </ul>
+</p>
 
 <%= link_to 'Edit', edit_admin_course_path(@course) %> |
 <%= link_to 'Back', admin_courses_path %>

@@ -1,75 +1,88 @@
-<p id="notice"><%= notice %></p>
+<h1>My Courses</h1>
+<h6 class='inline-flex xs-margin-right'>
+  <kbd><%= @student.full_name %></kbd>
+</h6>
 
-<p>
-  <strong>Name:</strong>
-  <%= @student.full_name.titleize %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @student.email %>
-</p>
-
-<p>
-  <strong>Reviews:</strong>
-
-  <% if @student.reviews.blank? %>
-    –
-  <% else %>
-    <ul>
-      <% @student.reviews.each do |r| %>
-        <li>
-          (Rating: <%= r.rating %>) –
-          "<%= r.description %>"
-          <br/><i><%= r.klass.course.name %> by <%= r.klass.teacher.full_name %></i>
-        </li>
-
-        <br/>
-      <% end %>
-    </ul>
-  <% end %>
-</p>
-
-<p>
-  <strong>Enrolled Courses:</strong>
-  <ul>
-    <% @student.klasses.order_by_course.each do |klass| %>
-      <li>
-        <%= klass.course.name %> by <%= klass.teacher.full_name %> |
-        <%= link_to 'View', klass_path(klass, redirect_to: URI.encode(student_path(@student))) %>
-        <% if current_user == @student %>
-          |
-          <%= link_to 'Unenroll',
-            unenroll_admin_klass_path(klass.id),
-            method: :put %>
+<% if @student.reviews.present? %>
+  <div class='row md-margin-top'>
+    <div class='col'>
+      <h5>Reviews</h5>
+      <div id="accordion">
+        <% @student.reviews.each_with_index do |review, index| %>
+          <div class="card">
+            <div class="card-header">
+              <%= link_to review.klass.course.name, "#collapse_#{index}",
+                class: 'card-link bg-transparent text-secondary',
+                'data-toggle': 'collapse' %>
+              <span class='small'>by <%= review.klass.teacher.full_name %></span>
+            </div>
+            <div id=<%= "collapse_#{index}" %> class="collapse" data-parent="#accordion">
+              <div class="card-body">
+                <span>(Rating: <%= review.rating %>)</span>
+                <span><%= review.description %></span>
+              </div>
+            </div>
+          </div>
         <% end %>
-      </li>
-    <% end %>
-  </ul>
-</p>
-
-<p>
-  <strong>Available Courses:</strong>
-  <ul>
-    <% @student.klasses_for_enrollment.includes(:teacher).each do |klass| %>
-      <li>
-        <%= klass.course.name %> by <%= klass.teacher.full_name %> |
-        <%= link_to 'View', klass_path(klass, redirect_to: URI.encode(student_path(@student))) %>
-        <% if current_user == @student %>
-          |
-          <%= link_to 'Enroll',
-            enroll_admin_klass_path(klass.id,
-              student_id: @student.id,
-              course_id: klass.course_id
-            ), method: :put %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-</p>
-
-<% if current_user == @student %>
-  <%= link_to 'Edit', edit_student_path(@student) %> |
+      </div>
+    </div>
+  </div>
 <% end %>
 
-<%= link_to 'Back', root_path %>
+<div class='row md-margin-top'>
+  <div class='col'>
+    <h5>Enrolled Courses</h5>
+    <ul class='list-group'>
+      <% @student.klasses.each do |klass| %>
+        <li class='list-group-item'>
+          (Rating: <%= klass.klass_rating.nan? ? '–' : klass.klass_rating %>)
+          <%= link_to truncate(klass.course.name, length: 50), klass_path(klass),
+            class: 'bg-transparent text-secondary' %>
+          <span class='small'>
+            by <%= link_to klass.teacher.full_name, teacher_path(klass.teacher),
+              class: 'bg-transparent text-secondary' %>
+          </span>
+
+          <% if current_user && current_user == @student %>
+            <%= link_to 'Unenroll',
+              unenroll_klass_path(klass),
+              method: :put,
+              class: 'bg-transparent float-right text-danger' %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<% if current_user == @student %>
+  <div class='row md-margin-top'>
+    <div class='col'>
+      <h5>Available Courses</h5>
+      <ul class='list-group'>
+        <% @student.klasses_for_enrollment.includes(:teacher).each do |klass| %>
+          <li class='list-group-item'>
+            (Rating: <%= klass.klass_rating.nan? ? '–' : klass.klass_rating %>)
+            <%= link_to truncate(klass.course.name, length: 50), klass_path(klass), class: 'bg-transparent text-secondary' %> by
+            <%= link_to klass.teacher.full_name,
+              teacher_path(klass.teacher), class: 'bg-transparent text-secondary' %>
+
+            <% if current_user.present? %>
+              <%= link_to 'Enroll', enroll_klass_path(klass),
+                method: :put,
+                class: 'bg-transparent float-right text-success' %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class='md-margin-top inline-flex'>
+    <%= link_to 'Settings', edit_student_path(@student), class: 'btn btn-primary text-light' %>
+  </div>
+<% end %>
+
+<div class='md-margin-top back-btn'>
+  <%= link_to 'Back', root_path, class: 'btn btn-dark text-light' %>
+</div>

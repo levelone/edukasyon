@@ -1,5 +1,9 @@
-<h1>New Student</h1>
-
-<%= render '/admin/students/form', student: @student, path: students_path %>
-
-<%= link_to 'Back', login_path %>
+<div class='row'>
+  <div class='col-md-4 offset-md-4'>
+    <h1 class='text-center'>New Student</h1>
+    <div class='md-margin-top'>
+      <%= render '/admin/students/form', student: @student, path: students_path %>
+      <%= link_to 'Back', login_path, class: 'btn btn-dark text-light back-btn float-right' %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+.no-margin {
+ margin: 0;
+}
+
+.jumbotron-lg {
+  padding: 8rem !important;
+}
+
+.jumbotron-sm {
+  padding: 3rem !important;
+}
+
+.form-inline {
+  display: inline-flex !important;
+}
+
+.form-inline > *:not(:last-child) {
+  margin-right: 10px;
+}
+
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.course-list {
+  width: 100%;
+}
+
+.course-list-item {
+  float: left;
+  width: 25%;
+  text-align: left;
+  margin-top: 40px;
+}
+
+.course-list-item .card-img-top {
+  height: 180px;
+}
+
+.course-list-item .card-body {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-list-item .card-text {
+  flex-grow: 1;
+}
+
+.lg-padding-top {
+  padding-top: 40px;
+}
+
+.sm-padding {
+  padding: 10px;
+}
+
+.md-margin-top {
+  margin-top: 20px;
+}
+
+.md-margin-bottom {
+  margin-bottom: 20px;
+}
+
+.search-form {
+  display: inline-flex;
+}
+
+.back-btn {
+  display: inline-flex;
+  margin: 0 5px;
+}
+
+.admin-show-img {
+  overflow: hidden;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.xs-margin-right {
+  margin-right: 5px;
+}
+
+.klass-rating {
+  vertical-align: middle;
+}

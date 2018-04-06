@@ -1,21 +1,29 @@
-<p>
-  <strong>Teacher:</strong>
-  <%= @teacher.full_name %>
-</p>
+<div class='jumbotron jumbotron-sm no-margin text-center'>
+  <img src="<%= image_url(@teacher.image_url || '') %>" height='200'/>
+  <div class='md-margin-top'>
+    <h2><%= @teacher.full_name %></h2>
+    <p><%= @teacher.email %></p>
+    <div class='klass-rating'>
+      <div class='stars-outer'>
+        <div class='stars-inner'>
+        </div>
+      </div>
+      <span class='small'>(Rating: <%= @teacher.klass_average_rating %> | Reviews: <%= @teacher.reviews.count %>)</span>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Email:</strong>
-  <%= @teacher.email %>
-</p>
-
-<p>
-  <strong>Courses:</strong>
-  <ul>
-    <% @teacher.klasses.offered_klasses.each do |klass| %>
-      <li><%= link_to klass.course.name, klass_path(klass, redirect_to: URI.encode(teacher_path(@teacher))) %></li>
-    <% end %>
-  </ul>
-</p>
-
-
-<%= link_to 'Back', teachers_path %>
+<ul class='course-list'>
+  <% @teacher.klasses.offered_klasses.each do |klass| %>
+    <li class='course-list-item'>
+      <div class='card'>
+        <img class='card-img-top' src="<%= image_url(klass.course.image_url || '') %>" alt='Card image'>
+        <div class='card-body'>
+          <h5 class='card-title'><%= truncate(klass.course.name, length: 33) %></h5>
+          <p class='card-text'><%= truncate(klass.course.description, length: 90) %></p>
+          <%= link_to 'See Course', klass_path(klass, redirect_to: URI.encode(teacher_path(@teacher))), class: 'btn btn-warning btn-sm text-light' %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>

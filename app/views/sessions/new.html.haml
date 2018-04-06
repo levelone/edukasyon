@@ -1,23 +1,26 @@
-%h1 Login
+.row
+  .col-md-4.offset-md-4
+    %h1 Login
 
-= form_for(:session, url: login_path) do |f|
-  - if @error.present?
-    .error_explanation
-      .alert.alert-error
-        = @error
+    .md-margin-top
+      = form_for(:session, url: login_path) do |f|
+        - if @error.present?
+          .error_explanation
+            .alert.alert-danger
+              = @error
 
-  = hidden_field_tag :redirect_to, params[:redirect_to]
+        = hidden_field_tag :redirect_to, params[:redirect_to]
 
-  .form_field
-    = f.label :email
-    = f.text_field :email, value: session[:email]
+        .form-group
+          = f.label :email
+          = f.text_field :email, value: session[:email], class: 'form-control'
 
-  .form_field
-    = f.label :password
-    = f.password_field :password
+        .form-group
+          = f.label :password
+          = f.password_field :password, class: 'form-control'
 
-  = f.submit 'Login'
+        = f.submit 'Login', class: 'btn btn-primary float-right'
 
-%p
-  No account?
-  = link_to 'Sign up', new_student_path
+      %p
+        No account?
+        = link_to 'Sign up', new_student_path, class: 'bg-transparent text-secondary'

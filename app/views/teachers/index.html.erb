@@ -1,15 +1,31 @@
 <h1>Teachers</h1>
 
-<%= render '/shared/search_form',
-  path: teachers_path,
-  type: 'Teacher' %>
+<%= render '/shared/search_form', path: teachers_path, type: 'Teacher' %>
+<%= link_to 'Back', root_path, class: 'btn btn-dark text-light back-btn' %>
 
-<ul>
-  <% @teachers.each do |teacher| %>
-    <li><%= link_to teacher.full_name, teacher_path(teacher.id) %></li>
-  <% end %>
-</ul>
-
-<br>
-
-<%= link_to 'Back', root_path %>
+<div class='lg-padding-top'>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Rating</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @teachers.each do |teacher| %>
+        <tr>
+          <td><%= teacher.id %></td>
+          <td><%= teacher.first_name %></td>
+          <td><%= teacher.last_name %></td>
+          <td><%= teacher.email %></td>
+          <td><%= teacher.klass_average_rating %></td>
+          <td><%= link_to 'View Profile', teacher_path(teacher), class: 'text-secondary bg-transparent' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
