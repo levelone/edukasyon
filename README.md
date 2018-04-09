@@ -1,24 +1,22 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+* Rails 5.1.6
+* Ruby 2.4.3
+* Postgres 10.3
 
-* Ruby version
+Run the following:
 
-* System dependencies
+```
+bundle install
+rake db:create --trace
+rake db:migrate --trace
+rake db:seed --trace
+```
 
-* Configuration
+Login credentials:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+email: test_student@edukasyon.com
+password: Password123
+```
