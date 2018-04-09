@@ -16,6 +16,11 @@
             method: :put,
             class: 'text-success' %>
         <% end %>
+      <% else %>
+        <%= link_to 'Enroll',
+          login_path(redirect_to: URI.encode(course_path(@course))),
+          method: :get,
+          class: 'text-success' %>
       <% end %>
 
       at <%= link_to klass.teacher.full_name,

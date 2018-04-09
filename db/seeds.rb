@@ -16,7 +16,7 @@ def create_teachers
   faker_name = Faker::Name.unique
   faker_internet = Faker::Internet.unique
 
-  (0..9).each do |n|
+  (0..9).each do |_|
     Teacher.create!(
       first_name: faker_name.first_name,
       last_name: faker_name.last_name,
@@ -40,7 +40,7 @@ def create_students
     password_confirmation: 'Password123'
   )
 
-  (0..19).each do |n|
+  (0..19).each do |_|
     Student.create!(
       first_name: faker_name.first_name,
       last_name: faker_name.last_name,
@@ -94,7 +94,16 @@ def create_reviews
  end
 end
 
+def destroy_all
+  Klass.destroy_all
+  Teacher.destroy_all
+  Student.destroy_all
+  Course.destroy_all
+  Review.destroy_all
+end
+
 ActiveRecord::Base.transaction do
+  destroy_all
   create_courses
   create_teachers
   create_klasses

@@ -1,3 +1,23 @@
+<% if current_user.present? && @is_klass_student %>
+  <% action_path = unenroll_klass_path(@klass) %>
+  <% action_name = 'Unenroll' %>
+  <% action_method = :put %>
+<% elsif current_user.present? %>
+  <% action_path = enroll_klass_path(@klass) %>
+  <% action_name = 'Enroll' %>
+  <% action_method = :put %>
+<% else %>
+  <% action_path = login_path(redirect_to: URI.encode(klass_path(@klass))) %>
+  <% action_name = 'Enroll' %>
+  <% action_method = :get %>
+<% end %>
+
+<% if params[:redirect_to] %>
+  <% back_path = URI.decode(params[:redirect_to]) %>
+<% else %>
+  <% back_path = course_path(@klass.course) %>
+<% end %>
+
 <% flash.each do |key, message| %> 
   <p id="<%= key %>">
     <%= message %>
@@ -34,6 +54,20 @@
         <% end %>
       </ul>
     <% end %>
+
+    <div class='md-margin-top'>
+      <%= link_to action_name, action_path, method: action_method, class: 'btn btn-primary text-light' %>
+      <%= link_to 'Back', back_path, class: 'btn btn-dark text-light back-btn' %>
+    </div>
+
+    <% if @is_klass_student && !@has_klass_review %>
+      <div class='row md-margin-top'>
+        <div class='col'>
+          <h5 class='md-margin-bottom'>Leave Review</h5>
+          <%= render '/reviews/form', review: @review, path: reviews_path(klass_id: @klass.id) %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <div class='md-margin-top col-md-6'>
@@ -50,37 +84,3 @@
     <% end %>
   </div>
 </div>
-
-<% if current_user.present? && @is_klass_student %>
-  <% action_path = unenroll_klass_path(@klass) %>
-  <% action_name = 'Unenroll' %>
-  <% action_method = :put %>
-<% elsif current_user.present? %>
-  <% action_path = enroll_klass_path(@klass) %>
-  <% action_name = 'Enroll' %>
-  <% action_method = :put %>
-<% else %>
-  <% action_path = login_path(redirect_to: URI.encode(klass_path(@klass))) %>
-  <% action_name = 'Enroll' %>
-  <% action_method = :get %>
-<% end %>
-
-<% if params[:redirect_to] %>
-  <% back_path = URI.decode(params[:redirect_to]) %>
-<% else %>
-  <% back_path = course_path(@klass.course) %>
-<% end %>
-
-<div class='md-margin-top'>
-  <%= link_to action_name, action_path, method: action_method, class: 'btn btn-primary text-light' %>
-  <%= link_to 'Back', back_path, class: 'btn btn-dark text-light back-btn' %>
-</div>
-
-<% if @is_klass_student && !@has_klass_review %>
-  <div class='row md-margin-top'>
-    <div class='col-md-6'>
-      <h5 class='md-margin-bottom'>Leave Review</h5>
-      <%= render '/reviews/form', review: @review, path: reviews_path(klass_id: @klass.id) %>
-    </div>
-  </div>
-<% end %>
